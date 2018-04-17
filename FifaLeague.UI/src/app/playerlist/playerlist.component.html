@@ -1,4 +1,5 @@
-<ul>
-  <li>Player 1</li>
-  <li>Player 2</li>
-</ul>
+<div>
+  <ul *ngFor="let player of _players">
+      <li>{{ player.name }}</li>
+  </ul>
+</div>

@@ -1,15 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { FifaLeagueService } from '../fifa-league.service';
 
 @Component({
   selector: 'app-playerlist',
   templateUrl: './playerlist.component.html',
   styleUrls: ['./playerlist.component.css']
 })
+
 export class PlayerlistComponent implements OnInit {
 
-  constructor() { }
+  public _players;
 
-  ngOnInit() {
+  constructor(private _fifaleagueService: FifaLeagueService) { }
+
+  ngOnInit() {    
+    this.getPlayers();
+  }
+
+  getPlayers() {
+    this._fifaleagueService.getPlayers().subscribe(data => this._players = data);    
   }
 
 }
