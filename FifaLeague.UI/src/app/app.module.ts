@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { PlayerlistComponent } from './playerlist/playerlist.component';
 import { FifaLeagueService } from './fifa-league.service';
 
+import {MatTable} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -15,7 +17,8 @@ import { FifaLeagueService } from './fifa-league.service';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTable
   ],
   providers: [FifaLeagueService],
   bootstrap: [AppComponent]
