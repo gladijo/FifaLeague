@@ -1,5 +1,18 @@
-<div>
-  <ul *ngFor="let player of _players">
-      <li>{{ player.name }}</li>
-  </ul>
-</div>
+<table class="u-full-width">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let player of _players">
+    <tr>
+      <td>{{ player.name }}</td>
+      <td>{{ player.firstName }}</td>
+      <td>{{ player.lastName }}</td>
+      <td>score</td>
+    </tr>
+  </tbody>
+</table>
