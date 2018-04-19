@@ -13,3 +13,5 @@ ng generate component playerlist
 ´´´
 code .
 ´´´
+dotnet add Microsoft.EntityFrameworkCore
+dotnet add Microsoft.AspNet.WebApi.Core

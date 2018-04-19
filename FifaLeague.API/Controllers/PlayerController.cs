@@ -1,12 +1,14 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
 using System.Linq;
 using FifaLeague.API.Models;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
 
-namespace FifaLeague.API.Controllers {
-    
+namespace FifaLeague.API.Controllers
+{
+
     [Route("api/[controller]")]
     public class PlayerController : Controller {
 
@@ -26,6 +28,23 @@ namespace FifaLeague.API.Controllers {
         [HttpGet]
         public IEnumerable<Player> Get() {
             return _context.Players.ToList();
+        }
+
+        [HttpPost]
+        public HttpResponseMessage Post(Player player) {
+
+            if(ModelState.IsValid)
+            {
+                _context.Players.Add(player);
+                _context.SaveChanges();      
+
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+                  
         }
     }
 }

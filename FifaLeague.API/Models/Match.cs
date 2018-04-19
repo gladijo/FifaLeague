@@ -3,7 +3,7 @@ using System;
 namespace FifaLeague.API.Models {
     public class Match {
 
-        public Guid Id { get; set; }
+        public Guid ID { get; set; }
 
         public Team One { get; set; }
 
