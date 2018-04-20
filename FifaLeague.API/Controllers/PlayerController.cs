@@ -20,6 +20,16 @@ namespace FifaLeague.API.Controllers
             if(_context.Players.Count() == 0)
             {
                 _context.Players.Add(new Player { FirstName = "John", LastName= "Memory"});
+                _context.Players.Add(new Player { FirstName = "Malcolm", LastName=  "Ransome"});
+                _context.Players.Add(new Player { FirstName ="Laurene", LastName=  "Cano"});
+                _context.Players.Add(new Player { FirstName ="Melynda", LastName=  "Almazan"});
+                _context.Players.Add(new Player { FirstName ="Zella", LastName=  "Milliken"});
+                _context.Players.Add(new Player { FirstName ="Luella", LastName=  "Gilmer"});
+                _context.Players.Add(new Player { FirstName ="Sandi", LastName=  "Manville"});
+                _context.Players.Add(new Player { FirstName ="Tamara", LastName=  "Sheeran"});
+                _context.Players.Add(new Player { FirstName ="Luana", LastName=  "Digiacomo"});
+                _context.Players.Add(new Player { FirstName ="Karly", LastName=  "Odegaard"});
+                _context.Players.Add(new Player { FirstName ="Cheryle", LastName= "Mccotter"});
                 _context.SaveChanges();
             }
         }

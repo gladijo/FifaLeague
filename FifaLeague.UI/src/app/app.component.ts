@@ -16,7 +16,7 @@ export class AppComponent {
   openDialog():void {
     const dialogConfig = new MatDialogConfig();
       
-    dialogConfig.disableClose = false;
+    dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
         id: 1,
