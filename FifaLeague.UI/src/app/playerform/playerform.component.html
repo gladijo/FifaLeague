@@ -1,19 +1,17 @@
-<div>
-  <h2 mat-dialog-title>Player</h2>
-  <mat-dialog-content>
-  
-    <mat-form-field>
-      <input matInput placeholder="Firstname" formControlName="firstname">
-    </mat-form-field>
-  
-    <mat-form-field>
-      <input matInput placeholder="Lastname" formControlName="lastname">
-    </mat-form-field>
-  </mat-dialog-content>
-  
-  <mat-dialog-actions>
-    <button class="mat-raised-button" (click)="close()">Close</button>
-    <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
-  </mat-dialog-actions>
-</div>
+<h2 mat-dialog-title>Player</h2>
+<mat-dialog-content [formGroup]="_playerForm" class="playerform">
+
+  <mat-form-field>
+    <input matInput placeholder="Firstname" formControlName="firstName">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Lastname" formControlName="lastName">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+</mat-dialog-actions>
 

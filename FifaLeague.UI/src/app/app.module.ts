@@ -5,9 +5,10 @@ import { AppComponent } from './app.component';
 import { PlayerlistComponent } from './playerlist/playerlist.component';
 import { FifaLeagueService } from './fifa-league.service';
 import { PlayerformComponent } from './playerform/playerform.component';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatToolbarModule } from '@angular/material';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule}  from '@angular/material/input';
+import { ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -20,9 +21,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     HttpClientModule,
     MatDialogModule,
+    MatToolbarModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [FifaLeagueService],
   bootstrap: [AppComponent],

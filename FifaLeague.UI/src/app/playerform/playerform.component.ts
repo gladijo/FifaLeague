@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialogRef} from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from "@angular/material";
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { FifaLeagueService } from '../fifa-league.service';
+import { Player } from '../models/player';
 
 @Component({
   selector: 'app-playerform',
@@ -12,13 +13,22 @@ export class PlayerformComponent implements OnInit {
 
   _playerForm:FormGroup;
 
-  constructor(private _dialogRef: MatDialogRef<PlayerformComponent>, @Inject(FormBuilder) _fb: FormBuilder, private _fifaleagueService: FifaLeagueService) { }
+  constructor(private _dialogRef: MatDialogRef<PlayerformComponent>, private _fb: FormBuilder, private _fifaleagueService: FifaLeagueService) { }
 
   ngOnInit() {
+    this._playerForm = new FormGroup({
+      firstName: new FormControl(),
+      lastName: new FormControl()
+   });
   }
 
   save() {
-      this._dialogRef.close();
+      var player = new Player();
+      player.firstName = this._playerForm.get('firstName').value;
+      player.lastName = this._playerForm.get('lastName').value;
+
+      this._fifaleagueService.addPlayer(player);
+
   }
 
   close() {

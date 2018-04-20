@@ -25,11 +25,6 @@ namespace FifaLeague.API.Controllers
                 _context.Players.Add(new Player { FirstName ="Melynda", LastName=  "Almazan"});
                 _context.Players.Add(new Player { FirstName ="Zella", LastName=  "Milliken"});
                 _context.Players.Add(new Player { FirstName ="Luella", LastName=  "Gilmer"});
-                _context.Players.Add(new Player { FirstName ="Sandi", LastName=  "Manville"});
-                _context.Players.Add(new Player { FirstName ="Tamara", LastName=  "Sheeran"});
-                _context.Players.Add(new Player { FirstName ="Luana", LastName=  "Digiacomo"});
-                _context.Players.Add(new Player { FirstName ="Karly", LastName=  "Odegaard"});
-                _context.Players.Add(new Player { FirstName ="Cheryle", LastName= "Mccotter"});
                 _context.SaveChanges();
             }
         }
@@ -42,7 +37,7 @@ namespace FifaLeague.API.Controllers
         [HttpPost]
         public HttpResponseMessage Post(Player player) {
 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 _context.Players.Add(player);
                 _context.SaveChanges();      

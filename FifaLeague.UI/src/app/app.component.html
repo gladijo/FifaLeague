@@ -1,8 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<mat-toolbar color='primary'>
+  <span>{{ title }}</span>
+</mat-toolbar>
 <div class="container">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
+
   <h1>Players</h1>
   <app-playerlist></app-playerlist>
   <button mat-raised-button (click)="openDialog()">Add new player</button>

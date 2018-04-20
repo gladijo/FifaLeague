@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {Player} from './models/player';
 
 @Injectable()
 export class FifaLeagueService {
@@ -9,6 +10,10 @@ export class FifaLeagueService {
 
   getPlayers() {
     return this._http.get(this._serviceUrl + "Player");
+  }
+
+  addPlayer(model:Player) {
+    return this._http.post<Player>(this._serviceUrl + "Player", model);
   }
 
 }
