@@ -7,6 +7,7 @@ import { PlayerformComponent } from './playerform/playerform.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'FifaLeague';
 
@@ -14,15 +15,14 @@ export class AppComponent {
 
   openDialog():void {
     const dialogConfig = new MatDialogConfig();
-
+      
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
         id: 1,
         title: 'Angular For Beginners'
     };
-    dialogConfig.width = '250px';
-
+  
     let dialogRef = this.dialog.open(PlayerformComponent, dialogConfig);
 
   //   dialogRef.afterClosed().subscribe(result => { 
