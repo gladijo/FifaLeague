@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
+import { PlayerformComponent } from './playerform/playerform.component';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +8,22 @@ import { MatDialog, MatDialogRef } from '@angular/material';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'FifaLeague';
 
   constructor(public dialog: MatDialog) {}
 
   openDialog():void {
-  //   let dialogRef = this.dialog.open(NewPlayerDialog, { 
-  //     width: '250px',
-  //     data : { }
-  //   });
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+        id: 1,
+        title: 'Angular For Beginners'
+    };
+    dialogConfig.width = '250px';
+
+    let dialogRef = this.dialog.open(PlayerformComponent, dialogConfig);
 
   //   dialogRef.afterClosed().subscribe(result => { 
   //     console.log('The dialog was closed');

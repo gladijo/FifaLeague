@@ -17,7 +17,6 @@ namespace FifaLeague.API.Controllers
         public PlayerController(FifaLeagueContext context)
         {
             _context = context;
-
             if(_context.Players.Count() == 0)
             {
                 _context.Players.Add(new Player { FirstName = "John", LastName= "Memory"});
@@ -46,7 +45,7 @@ namespace FifaLeague.API.Controllers
                 var exception = new HttpResponseMessage(HttpStatusCode.BadRequest) {                     
                     Content = new StringContent(string.Format("Player could not be saved", values)),
                     ReasonPhrase = "Player not saved"
-                };                
+                };                               
                 return exception;
             }
                   

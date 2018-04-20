@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { PlayerlistComponent } from './playerlist/playerlist.component';
 import { FifaLeagueService } from './fifa-league.service';
 import { PlayerformComponent } from './playerform/playerform.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -17,9 +18,11 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material';
   imports: [
     BrowserModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [FifaLeagueService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PlayerformComponent]
 })
 export class AppModule { }
