@@ -4,7 +4,7 @@ using System.Linq;
 using FifaLeague.API.Models;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using System.Web;
 
 namespace FifaLeague.API.Controllers
 {
@@ -42,7 +42,12 @@ namespace FifaLeague.API.Controllers
             }
             else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                var values = ModelState.Values.ToString();
+                var exception = new HttpResponseMessage(HttpStatusCode.BadRequest) {                     
+                    Content = new StringContent(string.Format("Player could not be saved", values)),
+                    ReasonPhrase = "Player not saved"
+                };                
+                return exception;
             }
                   
         }
