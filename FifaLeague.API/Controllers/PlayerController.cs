@@ -35,14 +35,16 @@ namespace FifaLeague.API.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Post(Player player) {
+        public HttpResponseMessage Post([FromBody] Player player) {
 
-            if(!ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                _context.Players.Add(player);
+                var addedPlayer = _context.Players.Add(player);
                 _context.SaveChanges();      
 
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                var message = new HttpResponseMessage(HttpStatusCode.OK);                
+                //message.Content = new ObjectContent(player.GetType(), player,new JsonMediaTypeFormatter(), "application/json");               
+                return message;
             }
             else
             {

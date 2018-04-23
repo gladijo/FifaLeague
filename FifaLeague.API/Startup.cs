@@ -38,8 +38,12 @@ namespace FifaLeague.API
                 app.UseCors(builder =>
                     builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
             }
-
-            app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            
+            app.UseMvc(routes => { 
+                routes.MapRoute(name:"default", template: "{controller=Player}/{action=Get}");
+            });
         }
     }
 }

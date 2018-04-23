@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FifaLeagueService } from '../fifa-league.service';
+import { Player } from '../models/player';
 
 @Component({
   selector: 'app-playerlist',
@@ -8,9 +9,8 @@ import { FifaLeagueService } from '../fifa-league.service';
 })
 
 export class PlayerlistComponent implements OnInit {
-
-  public _players;
-
+  @Input() _players:Player[];
+  
   constructor(private _fifaleagueService: FifaLeagueService) { }
 
   ngOnInit() {    
