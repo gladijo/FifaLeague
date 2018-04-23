@@ -11,9 +11,9 @@ import { Player } from '../models/player';
 })
 export class PlayerformComponent implements OnInit {
 
-  @Output() _addPlayerEvent:EventEmitter<any> = new EventEmitter<any>();
-
   _playerForm:FormGroup;
+  @Output() onSave = new EventEmitter<any>();
+  @Output() onCancel = new EventEmitter<any>();
 
   constructor(private _dialogRef: MatDialogRef<PlayerformComponent>, private _fb: FormBuilder, private _fifaleagueService: FifaLeagueService) { }
 
@@ -29,7 +29,9 @@ export class PlayerformComponent implements OnInit {
       player.firstName = this._playerForm.get('firstName').value;
       player.lastName = this._playerForm.get('lastName').value;
 
-      this._fifaleagueService.addPlayer(player).subscribe(data => { console.log(data); this._addPlayerEvent.emit(player); });
+      this._fifaleagueService.addPlayer(player).subscribe(data => { console.log(data) });
+
+      this.onSave.emit();
   }
 
   close() {
