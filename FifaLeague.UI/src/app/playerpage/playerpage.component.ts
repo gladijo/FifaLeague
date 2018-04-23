@@ -21,7 +21,7 @@ export class PlayerpageComponent implements OnInit {
     this.getPlayers();
   }
 
-  getPlayers() {
+  getPlayers():void {
     this._fifaleagueService.getPlayers().subscribe(data => this._players = data);    
   }
 
@@ -36,10 +36,17 @@ export class PlayerpageComponent implements OnInit {
     };
   
     let dialogRef = this.dialog.open(PlayerformComponent, dialogConfig);
-
+    
     dialogRef.afterClosed().subscribe(result => { 
-       console.log('The dialog was closed. refresh player data');
+       console.log('The dialog was closed.');
+       // refresh data if needed
        this.getPlayers();       
+    });
+  }
+
+  updatePlayer(model:Player):void {
+    this._fifaleagueService.updatePlayer(model).subscribe(data => { 
+
     });
   }
 

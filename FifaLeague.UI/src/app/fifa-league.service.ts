@@ -21,7 +21,7 @@ export class FifaLeagueService {
   private _serviceUrl = "http://localhost:5000/api/";
   constructor(private _http: HttpClient) { }
 
-  getPlayers(): Observable<Player[]>  {
+  getPlayers(): Observable<Player[]> {
     return this._http.get<Player[]>(this._serviceUrl + "Player");
   }
 
@@ -33,24 +33,32 @@ export class FifaLeagueService {
       );
   }
 
+  /** POST: updating existing player to the database */
+  updatePlayer( model:Player): Observable<Player> {
+    return this._http.put<Player>(this._serviceUrl + "Player", model, httpOptions)
+      .pipe(
+        catchError(this.handleError('updatePlayer', model))
+      );
+  }
+
   /**
- * Handle Http operation that failed.
- * Let the app continue.
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
-private handleError<T> (operation = 'operation', result?: T) {
-  return (error: any): Observable<T> => {
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
 
-    // TODO: send the error to remote logging infrastructure
-    console.error(error); // log to console instead
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
 
-    // TODO: better job of transforming error for user consumption
-    //this.log(`${operation} failed: ${error.message}`);
+      // TODO: better job of transforming error for user consumption
+      //this.log(`${operation} failed: ${error.message}`);
 
-    // Let the app keep running by returning an empty result.
-    return of(result as T);
-  };
-}
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
 
 }

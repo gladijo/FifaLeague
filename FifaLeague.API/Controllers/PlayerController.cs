@@ -5,6 +5,7 @@ using FifaLeague.API.Models;
 using System.Net;
 using System.Net.Http;
 using System.Web;
+using Microsoft.EntityFrameworkCore;
 
 namespace FifaLeague.API.Controllers
 {
@@ -42,20 +43,37 @@ namespace FifaLeague.API.Controllers
                 var addedPlayer = _context.Players.Add(player);
                 _context.SaveChanges();      
 
-                var message = new HttpResponseMessage(HttpStatusCode.OK);                
-                //message.Content = new ObjectContent(player.GetType(), player,new JsonMediaTypeFormatter(), "application/json");               
-                return message;
+                return new HttpResponseMessage(HttpStatusCode.OK);  ;
             }
             else
             {
-                var values = ModelState.Values.ToString();
-                var exception = new HttpResponseMessage(HttpStatusCode.BadRequest) {                     
-                    Content = new StringContent(string.Format("Player could not be saved", values)),
-                    ReasonPhrase = "Player not saved"
-                };                               
-                return exception;
+                return CreateInvalidModelMessage();
             }
                   
+        }
+
+        [HttpPut]
+        public HttpResponseMessage Put([FromBody] Player player)
+        {
+            if(ModelState.IsValid)
+            {   
+                _context.Entry(player).State = EntityState.Modified;
+                _context.SaveChanges();  
+
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            else
+            {                
+                return CreateInvalidModelMessage();
+            }
+        }
+
+        private HttpResponseMessage CreateInvalidModelMessage() {
+            var values = ModelState.Values.ToString();
+            return new HttpResponseMessage(HttpStatusCode.BadRequest) {
+                Content = new StringContent(string.Format("Model Values:", values)),
+                ReasonPhrase = "Invalid Modelstate"
+            };
         }
     }
 }
