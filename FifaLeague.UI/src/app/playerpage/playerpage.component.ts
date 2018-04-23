@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { PlayerformComponent } from '../playerform/playerform.component';
+
+import { FifaLeagueService } from '../fifa-league.service';
+import { Player } from '../models/player';
 
 @Component({
   selector: 'app-playerpage',
@@ -10,9 +13,16 @@ import { PlayerformComponent } from '../playerform/playerform.component';
 })
 export class PlayerpageComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) {}
+  private _players:Player[];
+
+  constructor(public dialog: MatDialog, private _fifaleagueService: FifaLeagueService) {}
 
   ngOnInit() {
+    this.getPlayers();
+  }
+
+  getPlayers() {
+    this._fifaleagueService.getPlayers().subscribe(data => this._players = data);    
   }
 
   openDialog():void {
@@ -27,9 +37,10 @@ export class PlayerpageComponent implements OnInit {
   
     let dialogRef = this.dialog.open(PlayerformComponent, dialogConfig);
 
-  //   dialogRef.afterClosed().subscribe(result => { 
-  //     console.log('The dialog was closed');
-  //   });
+    dialogRef.afterClosed().subscribe(result => { 
+       console.log('The dialog was closed. refresh player data');
+       this.getPlayers();       
+    });
   }
 
 }

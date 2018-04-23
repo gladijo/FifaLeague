@@ -7,12 +7,12 @@
       <th>Score</th>
     </tr>
   </thead>
-  <tbody *ngFor="let player of _players">
+  <tbody *ngFor="let player of Players">
     <tr>
       <td>{{ player.name }}</td>
       <td>{{ player.firstName }}</td>
       <td>{{ player.lastName }}</td>
-      <td>score</td>
+      <td>{{ player.score }}</td>
     </tr>
   </tbody>
 </table>

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FifaLeagueService } from '../fifa-league.service';
 import { Player } from '../models/player';
 
 @Component({
@@ -9,16 +8,11 @@ import { Player } from '../models/player';
 })
 
 export class PlayerlistComponent implements OnInit {
-  @Input() _players:Player[];
+  @Input() public Players:Player[];
   
-  constructor(private _fifaleagueService: FifaLeagueService) { }
+  constructor() { }
 
   ngOnInit() {    
-    this.getPlayers();
-  }
-
-  getPlayers() {
-    this._fifaleagueService.getPlayers().subscribe(data => this._players = data);    
-  }
-
+    
+  }  
 }
