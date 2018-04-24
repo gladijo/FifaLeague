@@ -7,8 +7,8 @@
       <th>Score</th>
     </tr>
   </thead>
-  <tbody *ngFor="let player of Players">
-    <tr>
+  <tbody *ngFor="let player of _players">
+    <tr (click)="select(player)">
       <td>{{ player.name }}</td>
       <td>{{ player.firstName }}</td>
       <td>{{ player.lastName }}</td>

@@ -1,14 +1,19 @@
 <h2 mat-dialog-title>Player</h2>
 <mat-dialog-content [formGroup]="_playerForm" class="playerform">
+
+  <div *ngIf="selectedPlayer">
+      <h2>{{ selectedPlayer.name | uppercase }} Details</h2>
+      <div><span>id: </span>{{selectedPlayer.id}}</div>
+  </div>
+  
   <mat-form-field>
-    <input matInput placeholder="Firstname" formControlName="firstName">
+    <input matInput placeholder="Firstname" formControlName="firstName" [(ngModel)]="selectedPlayer.firstName" >
   </mat-form-field>
   <mat-form-field>
-    <input matInput placeholder="Lastname" formControlName="lastName">
+    <input matInput placeholder="Lastname" formControlName="lastName" [(ngModel)]="selectedPlayer.lastName" >
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button class="mat-raised-button" (click)="close()">Close</button>
   <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
 </mat-dialog-actions>
-
