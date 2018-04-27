@@ -27,6 +27,7 @@ export class FifaLeagueService {
 
   /** POST: add a new player to the database */
   addPlayer (model: Player): Observable<Player> {
+    
     return this._http.post<Player>(this._serviceUrl + "Player", model, httpOptions)
       .pipe(
         catchError(this.handleError('addPlayer', model))

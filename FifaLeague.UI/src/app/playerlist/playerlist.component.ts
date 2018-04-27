@@ -3,6 +3,7 @@ import { Player } from '../models/player';
 import { FifaLeagueService } from '../fifa-league.service';
 import { PlayerformComponent } from '../playerform/playerform.component';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-playerlist',
@@ -11,32 +12,30 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 })
 
 export class PlayerlistComponent implements OnInit {
-  @Input() public _players:Player[];
-  
-  selectedPlayer:Player;
+    
+  Players:Observable<Player[]>;
 
   constructor(private _dialog:MatDialog, private _fifaleagueService:FifaLeagueService) { }
 
   ngOnInit() {    
-    this.getPlayers();
+      this.Players = this.getPlayers();
   }  
 
-  getPlayers():void {
-    this._fifaleagueService.getPlayers().subscribe(data => this._players = data);    
+  selectPlayer(model:Player):void {
+    // navigate to player form
+    this.openDialog(model);
   }
 
-  select(player: Player): void {
-    this.selectedPlayer = player;
-    console.log(this.selectedPlayer);
-    this.openDialog();
+  getPlayers():Observable<Player[]> {
+    return this._fifaleagueService.getPlayers();    
   }
 
-  openDialog():void {
+  openDialog(model:Player):void {
     const dialogConfig = new MatDialogConfig();
       
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = { };
+    dialogConfig.data = model;
   
     let dialogRef = this._dialog.open(PlayerformComponent, dialogConfig);
     
