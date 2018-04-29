@@ -27,6 +27,11 @@ export class PlayerlistComponent implements OnInit {
     this.openDialog(model);
   }
 
+  removePlayer(model:Player):void {
+    // remove player
+    this._fifaleagueService.remove(model.id);
+  }
+
   openDialog(model:Player):void {
     const dialogConfig = new MatDialogConfig();
       

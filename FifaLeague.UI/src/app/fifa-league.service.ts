@@ -73,12 +73,12 @@ export class FifaLeagueService {
   }
 
   update(player: Player) {
-    this.http.put<Player>(`${this.baseUrl}/Player/${player.id}`, JSON.stringify(player),this.httpOptions)
+    this.http.put<Player>(`${this.baseUrl}/Player/${player.id}`, JSON.stringify(player), this.httpOptions)
       .pipe(
         catchError(this.handleError('updatePlayer', player))
       )
       .subscribe(data => {
-        debugger;
+        
         this.dataStore.players.forEach((t, i) => {
           if (t.id === data.id) { this.dataStore.players[i] = data; }
         });

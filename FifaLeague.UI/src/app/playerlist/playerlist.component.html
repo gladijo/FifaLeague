@@ -1,6 +1,7 @@
 <table class="u-full-width">
   <thead>
     <tr>
+      <th></th>
       <th>Name</th>
       <th>Firstname</th>
       <th>Lastname</th>
@@ -8,8 +9,9 @@
     </tr>
   </thead>
   <tbody *ngFor="let player of Players | async">
-    <tr (click)="selectPlayer(player)">
-      <td>{{ player.name }}</td>
+    <tr>
+      <td><button (click)="removePlayer(player)">X</button></td>
+      <td (click)="selectPlayer(player)">{{ player.name }}</td>
       <td>{{ player.firstName }}</td>
       <td>{{ player.lastName }}</td>
       <td>{{ player.score }}</td>

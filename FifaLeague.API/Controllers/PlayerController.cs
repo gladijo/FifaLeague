@@ -6,6 +6,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 
 namespace FifaLeague.API.Controllers
 {
@@ -36,18 +38,18 @@ namespace FifaLeague.API.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] Player player) {
+        public IActionResult Post([FromBody] Player player) {
 
             if(ModelState.IsValid)
             {
-                var addedPlayer = _context.Players.Add(player);
+                var addCallback = _context.Players.Add(player);
                 _context.SaveChanges();      
 
-                return new HttpResponseMessage(HttpStatusCode.OK);  ;
+                return Ok(addCallback.Entity);
             }
             else
             {
-                return CreateInvalidModelMessage();
+                return BadRequest(ModelState);
             }
                   
         }
@@ -57,28 +59,36 @@ namespace FifaLeague.API.Controllers
         {
             if(ModelState.IsValid)
             {   
-                var objectToSave = _context.Players.Find(id);
-                objectToSave.FirstName = player.FirstName;
-                objectToSave.LastName = player.LastName;
+                var playerEntity = _context.Players.Find(id);
+                playerEntity.FirstName = player.FirstName;
+                playerEntity.LastName = player.LastName;
               
-                _context.Entry(objectToSave).State = EntityState.Modified;
+                _context.Entry(playerEntity).State = EntityState.Modified;
                 _context.SaveChanges();  
 
                 // return saved Object
-                return Ok(objectToSave);
+                return Ok(playerEntity);
             }
             else
             {                
-                return NoContent();
+                return BadRequest(ModelState);
             }
         }
 
-        private HttpResponseMessage CreateInvalidModelMessage() {            
-            var values = ModelState.Values.ToString();
-            return new HttpResponseMessage(HttpStatusCode.BadRequest) {
-                Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(values), System.Text.Encoding.UTF8, "application/json"),
-                ReasonPhrase = "Invalid Modelstate"
-            };
+        [HttpDelete("{id}", Name ="Delete")]
+        public IActionResult Delete(int id)
+        {
+            var playerEntity = _context.Players.Find(id);
+            if(playerEntity != null)
+            {
+                _context.Players.Remove(playerEntity);
+                _context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
