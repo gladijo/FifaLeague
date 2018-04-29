@@ -8,38 +8,93 @@ import { catchError, retry } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import { HttpHeaders } from '@angular/common/http';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json'
-  })
-};
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class FifaLeagueService {
 
-  private _serviceUrl = "http://localhost:5000/api/";
-  constructor(private _http: HttpClient) { }
+  players: Observable<Player[]>;
 
-  getPlayers(): Observable<Player[]> {
-    return this._http.get<Player[]>(this._serviceUrl + "Player");
+  private baseUrl:String;  
+  private _players: BehaviorSubject<Player[]>;
+  private dataStore: {
+    players: Player[]
+  };
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
+
+  constructor(private http: HttpClient) {
+    this.baseUrl = "http://localhost:5000/api";
+    this.dataStore = { players:[] };
+    this._players = <BehaviorSubject<Player[]>>new BehaviorSubject([]);
+    this.players = this._players.asObservable();
   }
 
-  /** POST: add a new player to the database */
-  addPlayer (model: Player): Observable<Player> {
-    
-    return this._http.post<Player>(this._serviceUrl + "Player", model, httpOptions)
-      .pipe(
-        catchError(this.handleError('addPlayer', model))
-      );
+  loadAll() {
+    this.http.get<Player[]>(`${this.baseUrl}/Player`)
+    .subscribe(data => {
+      this.dataStore.players = data;
+      this._players.next(Object.assign({}, this.dataStore).players);
+    }, error => console.log('Could not load players.'));
   }
 
-  /** POST: updating existing player to the database */
-  updatePlayer( model:Player): Observable<Player> {
-    return this._http.put<Player>(this._serviceUrl + "Player", model, httpOptions)
+  load(id: number | string) {
+    this.http.get<Player>(`${this.baseUrl}/Player/${id}`).subscribe(data => {
+      let notFound = true;
+
+      this.dataStore.players.forEach((item, index) => {
+        if (item.id === data.id) {
+          this.dataStore.players[index] = data;
+          notFound = false;
+        }
+      });
+
+      if (notFound) {
+        this.dataStore.players.push(data);
+      }
+
+      this._players.next(Object.assign({}, this.dataStore).players);
+    }, error => console.log('Could not load player.'));
+  }
+
+  create(player: Player) {
+    this.http.post<Player>(`${this.baseUrl}/Player`, JSON.stringify(player), this.httpOptions)
+    .pipe(
+      catchError(this.handleError('createPlayer', player))
+    )
+    .subscribe(data => {
+        this.dataStore.players.push(data);
+        this._players.next(Object.assign({}, this.dataStore).players);
+      }, error => console.log('Could not create player.'));
+  }
+
+  update(player: Player) {
+    this.http.put<Player>(`${this.baseUrl}/Player/${player.id}`, JSON.stringify(player),this.httpOptions)
       .pipe(
-        catchError(this.handleError('updatePlayer', model))
-      );
+        catchError(this.handleError('updatePlayer', player))
+      )
+      .subscribe(data => {
+        debugger;
+        this.dataStore.players.forEach((t, i) => {
+          if (t.id === data.id) { this.dataStore.players[i] = data; }
+        });
+
+        this._players.next(Object.assign({}, this.dataStore).players);
+      }, error => console.log('Could not update player.'));
+  }
+
+  remove(playerId: number) {
+    this.http.delete(`${this.baseUrl}/Player/${playerId}`).subscribe(response => {
+      this.dataStore.players.forEach((t, i) => {
+        if (t.id === playerId) { this.dataStore.players.splice(i, 1); }
+      });
+
+      this._players.next(Object.assign({}, this.dataStore).players);
+    }, error => console.log('Could not delete player.'));
   }
 
   /**

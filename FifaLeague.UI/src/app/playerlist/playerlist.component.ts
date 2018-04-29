@@ -18,16 +18,13 @@ export class PlayerlistComponent implements OnInit {
   constructor(private _dialog:MatDialog, private _fifaleagueService:FifaLeagueService) { }
 
   ngOnInit() {    
-      this.Players = this.getPlayers();
+      this.Players = this._fifaleagueService.players;
+      this._fifaleagueService.loadAll();
   }  
 
   selectPlayer(model:Player):void {
     // navigate to player form
     this.openDialog(model);
-  }
-
-  getPlayers():Observable<Player[]> {
-    return this._fifaleagueService.getPlayers();    
   }
 
   openDialog(model:Player):void {

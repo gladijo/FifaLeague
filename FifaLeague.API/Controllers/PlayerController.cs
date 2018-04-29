@@ -52,26 +52,31 @@ namespace FifaLeague.API.Controllers
                   
         }
 
-        [HttpPut]
-        public HttpResponseMessage Put([FromBody] Player player)
+        [HttpPut("{id}", Name = "Update")]
+        public IActionResult Put(int id,[FromBody] Player player)
         {
             if(ModelState.IsValid)
             {   
-                _context.Entry(player).State = EntityState.Modified;
+                var objectToSave = _context.Players.Find(id);
+                objectToSave.FirstName = player.FirstName;
+                objectToSave.LastName = player.LastName;
+              
+                _context.Entry(objectToSave).State = EntityState.Modified;
                 _context.SaveChanges();  
 
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                // return saved Object
+                return Ok(objectToSave);
             }
             else
             {                
-                return CreateInvalidModelMessage();
+                return NoContent();
             }
         }
 
-        private HttpResponseMessage CreateInvalidModelMessage() {
+        private HttpResponseMessage CreateInvalidModelMessage() {            
             var values = ModelState.Values.ToString();
             return new HttpResponseMessage(HttpStatusCode.BadRequest) {
-                Content = new StringContent(string.Format("Model Values:", values)),
+                Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(values), System.Text.Encoding.UTF8, "application/json"),
                 ReasonPhrase = "Invalid Modelstate"
             };
         }

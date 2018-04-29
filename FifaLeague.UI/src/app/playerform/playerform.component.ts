@@ -9,64 +9,75 @@ import { Player } from '../models/player';
   templateUrl: './playerform.component.html',
   styleUrls: ['./playerform.component.css']
 })
-export class PlayerformComponent implements OnInit {
+export class PlayerformComponent {
 
-  _editMode:Boolean;
-  _title:String;  
-  _playerForm:FormGroup;
+  isEdit:Boolean;
+  title:String;  
+  form:FormGroup;
+
+  firstName:FormControl = new FormControl('',Validators.required);
+  lastName:FormControl = new FormControl('',Validators.required);
+
+  errorMessage:String;
 
   @Output() saved = new EventEmitter<any>();
   @Output() canceled = new EventEmitter<any>();
 
-  constructor(private _dialogRef: MatDialogRef<PlayerformComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _fb: FormBuilder, private _fifaleagueService: FifaLeagueService) { 
-    this._editMode = false;
+  constructor(private dialogRef: MatDialogRef<PlayerformComponent>, @Inject(MAT_DIALOG_DATA) public data: Player, private fb: FormBuilder, private fifaleagueService: FifaLeagueService) { 
+    this.isEdit = false;
+    this.form = this.fb.group({
+        firstName: this.firstName,
+        lastName: this.lastName
+    });
+    if(this.data)
+    {
+        if(this.data.firstName) {this.form.patchValue({firstName: this.data.firstName});}
+        if(this.data.lastName) {this.form.patchValue({lastName: this.data.lastName});}
+        if(this.data.lastName || this.data.firstName) { this.isEdit = true; }
+    }  
+    this.form.valueChanges
+    .subscribe( data => console.log(JSON.stringify(data)));
   }
 
-  ngOnInit() {
+  handleSuccess() { 
+      this.dialogRef.close();
+  }
 
-    this._playerForm = this._fb.group({
-      firstName: ['', Validators.required ],
-      lastName: ['', Validators.required ]
-   });
+  handleError(errorMessage) {
+      this.errorMessage = errorMessage; 
+      console.error("API:" + errorMessage);
+  }
 
-   if(this.data !== undefined)
-   {
-      this._playerForm.setValue({firstName: this.data.firstName, lastName: this.data.lastName });
-      this._editMode = true;
-   }   
+  getPlayerObj() {
+    let player = new Player();  
+
+    player.firstName = this.form.get('firstName').value;
+    player.lastName = this.form.get('lastName').value;
+
+    player.id = this.data ? this.data.id : null; 
+
+    return player;
   }
 
   save() {
 
-      let player = new Player();
-      if(this._editMode && this.data !== undefined)
+      let player = this.getPlayerObj();     
+
+      if(!this.isEdit)
       {
-          player = this.data;
-      }    
-
-      player.firstName = this._playerForm.get('firstName').value;
-      player.lastName = this._playerForm.get('lastName').value;      
-
-      if(!this._editMode)
-      {
-          this._fifaleagueService.addPlayer(player).subscribe(data => { 
-                
-            }, error => { 
-
-            }, () => {
-                this.saved.emit();
-                this._dialogRef.close();
-            });
+          this.fifaleagueService.create(player)
+          //.subscribe(data => this.handleSuccess, error => this.handleError)
       }
       else 
       {
-          this._fifaleagueService.updatePlayer(player).subscribe(data => { console.log(data) });
+          this.fifaleagueService.update(player)
+          //.subscribe(data => this.handleSuccess, error => this.handleError)
       }
 
   }
 
   close() {
-      this._dialogRef.close();
+      this.dialogRef.close();
   }
 
 }

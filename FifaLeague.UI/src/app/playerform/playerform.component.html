@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Player</h2>
-<mat-dialog-content [formGroup]="_playerForm" class="playerform">
+<mat-dialog-content [formGroup]="form" class="playerform">
 
   <div *ngIf="selectedPlayer">
       <h2>{{ selectedPlayer.name | uppercase }} Details</h2>
@@ -12,8 +12,13 @@
   <mat-form-field>
     <input matInput placeholder="Lastname" formControlName="lastName">
   </mat-form-field>
+
+  <div *ngIf="errorMessage" style="border:3px solid red">
+    <span style="color:red">{{ errorMessage }}</span>
+  </div>
+
 </mat-dialog-content>
 <mat-dialog-actions>
   <button class="mat-raised-button" (click)="close()">Close</button>
-  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+  <button class="mat-raised-button mat-primary" (click)="save()" [disabled]="!form.valid">Save</button>
 </mat-dialog-actions>
