@@ -49,7 +49,7 @@ export class PlayerformComponent {
   }
 
   getPlayerObj() {
-    let player = new Player();  
+    let player:Player = { id:0, firstName: '', lastName: '', score:0 };  
 
     player.firstName = this.form.get('firstName').value;
     player.lastName = this.form.get('lastName').value;

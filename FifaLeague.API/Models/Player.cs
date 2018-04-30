@@ -9,6 +9,8 @@ namespace FifaLeague.API.Models {
         [Required]
         public string LastName { get;set;}
 
+        public int Score {get;set; }
+
         public string Name { get { return this.FirstName + " " +  this.LastName; } }
     }
 }

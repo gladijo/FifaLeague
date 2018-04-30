@@ -22,12 +22,12 @@ namespace FifaLeague.API.Controllers
             _context = context;
             if(_context.Players.Count() == 0)
             {
-                _context.Players.Add(new Player { FirstName = "John", LastName= "Memory"});
-                _context.Players.Add(new Player { FirstName = "Malcolm", LastName=  "Ransome"});
-                _context.Players.Add(new Player { FirstName ="Laurene", LastName=  "Cano"});
-                _context.Players.Add(new Player { FirstName ="Melynda", LastName=  "Almazan"});
-                _context.Players.Add(new Player { FirstName ="Zella", LastName=  "Milliken"});
-                _context.Players.Add(new Player { FirstName ="Luella", LastName=  "Gilmer"});
+                _context.Players.Add(new Player { FirstName = "John", LastName="Memory", Score=1});
+                _context.Players.Add(new Player { FirstName = "Malcolm", LastName="Ransome", Score=2});
+                _context.Players.Add(new Player { FirstName ="Laurene", LastName="Cano", Score=3});
+                _context.Players.Add(new Player { FirstName ="Melynda", LastName="Almazan", Score=4});
+                _context.Players.Add(new Player { FirstName ="Zella", LastName="Milliken", Score=5});
+                _context.Players.Add(new Player { FirstName ="Luella", LastName="Gilmer", Score=6});
                 _context.SaveChanges();
             }
         }

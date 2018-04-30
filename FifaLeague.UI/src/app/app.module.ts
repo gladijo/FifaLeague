@@ -23,8 +23,8 @@ import { PlayerpageComponent } from './playerpage/playerpage.component';
     BrowserModule,
     HttpClientModule,
     MatDialogModule,
-    MatToolbarModule,
     BrowserAnimationsModule,
+    MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule

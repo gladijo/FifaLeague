@@ -9,11 +9,12 @@ import { of } from 'rxjs/observable/of';
 
 import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class FifaLeagueService {
 
-  players: Observable<Player[]>;
+  public players: Observable<Player[]>;
 
   private baseUrl:String;  
   private _players: BehaviorSubject<Player[]>;
@@ -62,10 +63,7 @@ export class FifaLeagueService {
   }
 
   create(player: Player) {
-    this.http.post<Player>(`${this.baseUrl}/Player`, JSON.stringify(player), this.httpOptions)
-    .pipe(
-      catchError(this.handleError('createPlayer', player))
-    )
+    this.http.post<Player>(`${this.baseUrl}/Player`, JSON.stringify(player), this.httpOptions)    
     .subscribe(data => {
         this.dataStore.players.push(data);
         this._players.next(Object.assign({}, this.dataStore).players);
@@ -73,10 +71,7 @@ export class FifaLeagueService {
   }
 
   update(player: Player) {
-    this.http.put<Player>(`${this.baseUrl}/Player/${player.id}`, JSON.stringify(player), this.httpOptions)
-      .pipe(
-        catchError(this.handleError('updatePlayer', player))
-      )
+    this.http.put<Player>(`${this.baseUrl}/Player/${player.id}`, JSON.stringify(player), this.httpOptions)     
       .subscribe(data => {
         
         this.dataStore.players.forEach((t, i) => {
@@ -95,26 +90,6 @@ export class FifaLeagueService {
 
       this._players.next(Object.assign({}, this.dataStore).players);
     }, error => console.log('Could not delete player.'));
-  }
-
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      //this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
   }
 
 }

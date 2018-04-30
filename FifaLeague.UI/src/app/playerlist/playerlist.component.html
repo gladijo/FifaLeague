@@ -5,15 +5,17 @@
       <th>Name</th>
       <th>Firstname</th>
       <th>Lastname</th>
+      <th>FullName</th>
       <th>Score</th>
     </tr>
   </thead>
   <tbody *ngFor="let player of Players | async">
     <tr>
-      <td><button (click)="removePlayer(player)">X</button></td>
-      <td (click)="selectPlayer(player)">{{ player.name }}</td>
+      <td><i (click)="removePlayer(player)" class="material-icons" style="cursor: pointer">delete_sweep</i></td>
+      <td (click)="selectPlayer(player)" style="cursor: pointer"><span>{{ player.name }}</span></td>
       <td>{{ player.firstName }}</td>
       <td>{{ player.lastName }}</td>
+      <td>{{ player.fullName }}</td>
       <td>{{ player.score }}</td>
     </tr>
   </tbody>

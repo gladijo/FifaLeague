@@ -15,11 +15,11 @@ export class PlayerlistComponent implements OnInit {
     
   Players:Observable<Player[]>;
 
-  constructor(private _dialog:MatDialog, private _fifaleagueService:FifaLeagueService) { }
+  constructor(private dialog:MatDialog, private fifaleagueService:FifaLeagueService) { }
 
   ngOnInit() {    
-      this.Players = this._fifaleagueService.players;
-      this._fifaleagueService.loadAll();
+      this.Players = this.fifaleagueService.players;
+      this.fifaleagueService.loadAll();
   }  
 
   selectPlayer(model:Player):void {
@@ -29,7 +29,7 @@ export class PlayerlistComponent implements OnInit {
 
   removePlayer(model:Player):void {
     // remove player
-    this._fifaleagueService.remove(model.id);
+    this.fifaleagueService.remove(model.id);
   }
 
   openDialog(model:Player):void {
@@ -39,7 +39,7 @@ export class PlayerlistComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = model;
   
-    let dialogRef = this._dialog.open(PlayerformComponent, dialogConfig);
+    let dialogRef = this.dialog.open(PlayerformComponent, dialogConfig);
     
     dialogRef.afterClosed().subscribe(result => { 
        console.log('The dialog was closed.');       
