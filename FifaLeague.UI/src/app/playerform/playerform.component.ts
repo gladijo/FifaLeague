@@ -65,12 +65,20 @@ export class PlayerformComponent {
 
       if(!this.isEdit)
       {
-          this.fifaleagueService.create(player)
+          this.fifaleagueService.create(player).subscribe(data => {
+            this.handleSuccess()
+          }, error => {
+            this.handleError(error)
+          })
           //.subscribe(data => this.handleSuccess, error => this.handleError)
       }
       else 
       {
-          this.fifaleagueService.update(player)
+          this.fifaleagueService.update(player).subscribe(data => {
+            this.handleSuccess()
+          }, error => {
+            this.handleError(error)
+          })
           //.subscribe(data => this.handleSuccess, error => this.handleError)
       }
 
