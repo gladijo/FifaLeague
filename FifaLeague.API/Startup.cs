@@ -36,7 +36,7 @@ namespace FifaLeague.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseCors(builder =>
-                    builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+                    builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
             }
             app.UseDefaultFiles();
             app.UseStaticFiles();

@@ -43,8 +43,11 @@ export class PlayerformComponent {
       this.dialogRef.close();
   }
 
-  handleError(errorMessage) {
-      this.errorMessage = errorMessage; 
+  handleError(errorResponse) {
+
+      var errorMessage = errorResponse.error;
+      var stringified = (Object.keys(errorMessage).map((key, value) => { return key + ":" + value; })).join();   
+      this.errorMessage = stringified; 
       console.error("API:" + errorMessage);
   }
 
