@@ -1,28 +1,41 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FifaLeague.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FifaLeague.API.Repositories {
-    class FifaLeagueRepository : IRepository<Player>
+    public class FifaLeagueRepository : IRepository<Player>
     {
+        private FifaLeagueContext _context;
+
+        public FifaLeagueRepository(FifaLeagueContext context)
+        {
+            this._context = context;
+        }
+
         public void Add(Player entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Added; 
+            _context.SaveChanges(); 
         }
 
         public void Delete(Player entity)
         {
-            throw new NotImplementedException();
+            //_context.Entry(entity).State = EntityState.Deleted;
+            _context.Remove(entity); 
+            _context.SaveChanges(); 
         }
 
         public IEnumerable<Player> GetList()
         {
-            throw new NotImplementedException();
+            return _context.Players.AsEnumerable();
         }
 
         public void Update(Player entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified; 
+            _context.SaveChanges(); 
         }
     }
 }

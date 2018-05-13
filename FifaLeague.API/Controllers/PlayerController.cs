@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using FifaLeague.API.Models;
+using FifaLeague.API.Repositories;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -15,26 +16,21 @@ namespace FifaLeague.API.Controllers
     [Route("api/[controller]")]
     public class PlayerController : Controller {
 
-        private readonly FifaLeagueContext _context;
-
+        private IRepository<Player> _repository;
         public PlayerController(FifaLeagueContext context)
         {
-            _context = context;
-            if(_context.Players.Count() == 0)
+            _repository = new FifaLeagueRepository(context);
+            if(_repository.GetList().Count() == 0)
             {
-                _context.Players.Add(new Player { FirstName = "John", LastName="Memory", Score=1});
-                _context.Players.Add(new Player { FirstName = "Malcolm", LastName="Ransome", Score=2});
-                _context.Players.Add(new Player { FirstName ="Laurene", LastName="Cano", Score=3});
-                _context.Players.Add(new Player { FirstName ="Melynda", LastName="Almazan", Score=4});
-                _context.Players.Add(new Player { FirstName ="Zella", LastName="Milliken", Score=5});
-                _context.Players.Add(new Player { FirstName ="Luella", LastName="Gilmer", Score=6});
-                _context.SaveChanges();
+                _repository.Add(new Player { FirstName = "John", LastName="Memory"});
+                _repository.Add(new Player { FirstName = "Malcolm", LastName="Ransome"});
+                _repository.Add(new Player { FirstName ="Laurene", LastName="Cano"});
             }
         }
 
         [HttpGet]
         public IEnumerable<Player> Get() {
-            return _context.Players.ToList();
+            return _repository.GetList();
         }
 
         [HttpPost]
@@ -42,10 +38,9 @@ namespace FifaLeague.API.Controllers
 
             if(ModelState.IsValid)
             {
-                var addCallback = _context.Players.Add(player);
-                _context.SaveChanges();      
-
-                return Ok(addCallback.Entity);
+                _repository.Add(player);     
+                // repository callback
+                return Ok();
             }
             else
             {
@@ -59,12 +54,11 @@ namespace FifaLeague.API.Controllers
         {
             if(ModelState.IsValid)
             {   
-                var playerEntity = _context.Players.Find(id);
+                var playerEntity = _repository.GetList().Where(x => x.ID == id).First();
                 playerEntity.FirstName = player.FirstName;
                 playerEntity.LastName = player.LastName;
               
-                _context.Entry(playerEntity).State = EntityState.Modified;
-                _context.SaveChanges();  
+                _repository.Update(playerEntity);
 
                 // return saved Object
                 return Ok(playerEntity);
@@ -78,11 +72,10 @@ namespace FifaLeague.API.Controllers
         [HttpDelete("{id}", Name ="Delete")]
         public IActionResult Delete(int id)
         {
-            var playerEntity = _context.Players.Find(id);
+            var playerEntity = _repository.GetList().Where(x => x.ID == id).First();
             if(playerEntity != null)
             {
-                _context.Players.Remove(playerEntity);
-                _context.SaveChanges();
+                _repository.Delete(playerEntity);
                 return Ok();
             }
             else
