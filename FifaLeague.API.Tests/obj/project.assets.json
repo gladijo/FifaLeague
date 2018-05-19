@@ -13747,23 +13747,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\developer\\.nuget\\packages\\": {},
+    "C:\\Users\\jorde\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\developer\\source\\repos\\FifaLeague\\FifaLeague.API.Tests\\FifaLeague.API.Tests.csproj",
+      "projectUniqueName": "d:\\SRC\\FifaLeague\\FifaLeague.API.Tests\\FifaLeague.API.Tests.csproj",
       "projectName": "FifaLeague.API.Tests",
-      "projectPath": "C:\\Users\\developer\\source\\repos\\FifaLeague\\FifaLeague.API.Tests\\FifaLeague.API.Tests.csproj",
-      "packagesPath": "C:\\Users\\developer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\developer\\source\\repos\\FifaLeague\\FifaLeague.API.Tests\\obj\\",
+      "projectPath": "d:\\SRC\\FifaLeague\\FifaLeague.API.Tests\\FifaLeague.API.Tests.csproj",
+      "packagesPath": "C:\\Users\\jorde\\.nuget\\packages\\",
+      "outputPath": "d:\\SRC\\FifaLeague\\FifaLeague.API.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\developer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jorde\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13776,8 +13776,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\developer\\source\\repos\\FifaLeague\\FifaLeague.API\\FifaLeague.API.csproj": {
-              "projectPath": "C:\\Users\\developer\\source\\repos\\FifaLeague\\FifaLeague.API\\FifaLeague.API.csproj"
+            "d:\\SRC\\FifaLeague\\FifaLeague.API\\FifaLeague.API.csproj": {
+              "projectPath": "d:\\SRC\\FifaLeague\\FifaLeague.API\\FifaLeague.API.csproj"
             }
           }
         }
@@ -13791,27 +13791,27 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
-          "Microsoft.NET.Test.Sdk": {
-            "target": "Package",
-            "version": "[15.6.0, )"
-          },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.0.0, )",
+            "version": "2.0",
             "autoReferenced": true
+          },
+          "Microsoft.NET.Test.Sdk": {
+            "target": "Package",
+            "version": "15.6.0"
           },
           "moq": {
             "target": "Package",
-            "version": "[4.8.2, )"
+            "version": "4.8.2"
           },
           "xunit": {
             "target": "Package",
-            "version": "[2.3.1, )"
+            "version": "2.3.1"
           },
           "xunit.runner.visualstudio": {
             "target": "Package",
-            "version": "[2.3.1, )"
+            "version": "2.3.1"
           }
         },
         "imports": [
