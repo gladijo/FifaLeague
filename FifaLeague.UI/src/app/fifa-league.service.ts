@@ -29,7 +29,7 @@ export class FifaLeagueService {
   };
 
   constructor(private http: HttpClient) {
-    this.baseUrl = "http://localhost:5000/api";
+    this.baseUrl = "http://localhost:8080/api";
     this.dataStore = { players:[] };
     this._players = <BehaviorSubject<Player[]>>new BehaviorSubject([]);
     this.players = this._players.asObservable();
