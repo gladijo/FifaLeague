@@ -25,7 +25,7 @@ namespace FifaLeague.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         { 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=FifaLeagueDB;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = Configuration["ConnectionStrings:DefaultConnection"];
     
             services.AddDbContext<FifaLeagueContext>(opt => opt.UseSqlServer(connection));
             services.AddMvc();

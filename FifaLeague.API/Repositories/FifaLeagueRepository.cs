@@ -22,7 +22,6 @@ namespace FifaLeague.API.Repositories {
 
         public void Delete(Player entity)
         {
-            //_context.Entry(entity).State = EntityState.Deleted;
             _context.Remove(entity); 
             _context.SaveChanges(); 
         }

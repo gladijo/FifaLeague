@@ -1,23 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { PlayerformComponent } from '../playerform/playerform.component';
-
-import { FifaLeagueService } from '../fifa-league.service';
-import { Player } from '../models/player';
 
 @Component({
   selector: 'app-playerpage',
   templateUrl: './playerpage.component.html',
   styleUrls: ['./playerpage.component.css']
 })
-export class PlayerpageComponent implements OnInit {
+export class PlayerpageComponent {
 
   constructor(public _dialog: MatDialog) {}
-
-  ngOnInit() {
-    
-  }
 
   openDialog():void {
     const dialogConfig = new MatDialogConfig();
@@ -26,7 +19,7 @@ export class PlayerpageComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = { };
   
-    let dialogRef = this._dialog.open(PlayerformComponent, dialogConfig);
+    let dialogRef:MatDialogRef<PlayerformComponent,any> = this._dialog.open(PlayerformComponent, dialogConfig);
     
     dialogRef.afterClosed().subscribe(result => { 
        console.log('The dialog was closed.');       

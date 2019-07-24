@@ -3,12 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using FifaLeague.API.Models;
 using FifaLeague.API.Repositories;
-using System.Net;
-using System.Net.Http;
-using System.Web;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
 
 namespace FifaLeague.API.Controllers
 {

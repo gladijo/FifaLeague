@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpErrorResponse } from '@angular/common/http';
-import {Player} from './models/player';
+import { Player } from './models/player';
 import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError, retry } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-
 import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class FifaLeagueService {

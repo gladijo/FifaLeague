@@ -9,8 +9,8 @@ import { Player } from '../models/player';
   templateUrl: './playerform.component.html',
   styleUrls: ['./playerform.component.css']
 })
-export class PlayerformComponent {
-
+export class PlayerformComponent implements OnInit {
+  
   isEdit:Boolean;
   title:String;  
   form:FormGroup;
@@ -24,6 +24,10 @@ export class PlayerformComponent {
   @Output() canceled = new EventEmitter<any>();
 
   constructor(private dialogRef: MatDialogRef<PlayerformComponent>, @Inject(MAT_DIALOG_DATA) public data: Player, private fb: FormBuilder, private fifaleagueService: FifaLeagueService) { 
+    
+  }
+
+  ngOnInit(): void {
     this.isEdit = false;
     this.form = this.fb.group({
         firstName: this.firstName,
@@ -44,11 +48,9 @@ export class PlayerformComponent {
   }
 
   handleError(errorResponse) {
-
       var errorMessage = errorResponse.error;
       var stringified = (Object.keys(errorMessage).map((key, value) => { return key + ":" + value; })).join();   
       this.errorMessage = stringified; 
-      console.error("API:" + errorMessage);
   }
 
   getPlayerObj() {
@@ -73,7 +75,6 @@ export class PlayerformComponent {
           }, error => {
             this.handleError(error)
           })
-          //.subscribe(data => this.handleSuccess, error => this.handleError)
       }
       else 
       {
@@ -82,7 +83,6 @@ export class PlayerformComponent {
           }, error => {
             this.handleError(error)
           })
-          //.subscribe(data => this.handleSuccess, error => this.handleError)
       }
 
   }
