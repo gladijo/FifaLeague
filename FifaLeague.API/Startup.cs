@@ -26,8 +26,14 @@ namespace FifaLeague.API
         public void ConfigureServices(IServiceCollection services)
         { 
             var connection = Configuration["ConnectionStrings:DefaultConnection"];
-    
-            services.AddDbContext<FifaLeagueContext>(opt => opt.UseSqlServer(connection));
+            if(!String.IsNullOrEmpty(connection))
+            {
+                services.AddDbContext<FifaLeagueContext>(opt => opt.UseSqlServer(connection));
+            }
+            else
+            {
+                services.AddDbContext<FifaLeagueContext>(opt => opt.UseInMemoryDatabase("FifaLeague"));
+            }            
             services.AddMvc();
         }
 
@@ -37,8 +43,11 @@ namespace FifaLeague.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors(builder =>
-                    builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+                app.UseCors(builder => builder
+                    .WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials());
             }
             app.UseDefaultFiles();
             app.UseStaticFiles();
